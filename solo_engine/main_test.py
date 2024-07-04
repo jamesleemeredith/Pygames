@@ -19,17 +19,33 @@ character_animations = load_character_animations()
 bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png"),const.SCALE).convert_alpha()
 arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png"),const.SCALE).convert_alpha()
 
+# Define font
+font = pygame.font.Font("assets/fonts/AtariClassic.ttf", 20)
+# Damage Text Class
+class DamageText(pygame.sprite.Sprite):
+    def __init__(self, x, y, damage, color):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = font.render(damage, True,color)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+
+
 # Create the player character
 player = Character(100, 100, 'player', character_animations)
 # Create player's weapon
 bow = Weapon(bow_image, arrow_image)
-# Create sprite group
+# Create sprite groups
+damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
 # Create enemy
 enemy = Character(200,300, 'ghost', character_animations)
 # Create enemy_list
 enemy_list = []
 enemy_list.append(enemy)
+
+#temp damage
+damage_text = DamageText(300,400,'15',const.RED)
+damage_text_group.add(damage_text)
 
 # Define player movement variables
 movement_flags = {
@@ -59,26 +75,29 @@ while running:
         dx -= player.speed
     if movement_flags["right"]:
         dx += player.speed
-    # Move player
+
+    # Move the player
     player.move(dx, dy)
 
-    # Update player
+    # Updates game objects
+    for enemy in enemy_list:
+        enemy.update()
     player.update()
     arrow = bow.update(player)
     if arrow:
         arrow_group.add(arrow)
+    for arrow in arrow_group:
+        arrow.update(enemy_list)
+    damage_text_group.update()
+
+    # Draw game objects
     for enemy in enemy_list:
-        enemy.update()
-    # Draw player character on screen
+        enemy.draw(screen)
     player.draw(screen)
     bow.draw(screen)
     for arrow in arrow_group:
-        arrow.update(enemy_list)
         arrow.draw(screen)
-    for enemy in enemy_list:
-        enemy.draw(screen)
-
-    print(enemy.health)
+    damage_text_group.draw(screen)
 
     # Event Handler
     for event in pygame.event.get():
