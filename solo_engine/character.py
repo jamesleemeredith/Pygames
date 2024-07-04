@@ -2,13 +2,13 @@ import pygame
 from math import sqrt
 
 class Character():
-    def __init__(self, x, y, character_type, character_animations):
+    def __init__(self, x, y, health, character_type, character_animations):
         """
         Initializes the Character with a position, animations, and type.
         """
         self.character_type = character_type
         self.alive = True
-        self.health = 100
+        self.health = health
         self.animations = character_animations[character_type]
         self.action = 'idle'
         self.frame_index = 0

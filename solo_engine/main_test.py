@@ -13,11 +13,32 @@ pygame.display.set_caption(const.GAME_TITLE)
 # Create clock for maintaining frame rate
 clock = pygame.time.Clock()
 
+# Load Health Bar Images
+heart_empty = scale_img(pygame.image.load("assets/images/items/heart_empty.png"),const.UI_SCALE).convert_alpha()
+heart_half = scale_img(pygame.image.load("assets/images/items/heart_half.png"),const.UI_SCALE).convert_alpha()
+heart_full = scale_img(pygame.image.load("assets/images/items/heart_full.png"),const.UI_SCALE).convert_alpha()
+
+
 # Load character animations
 character_animations = load_character_animations()
 # Load weapon images
-bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png"),const.SCALE).convert_alpha()
-arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png"),const.SCALE).convert_alpha()
+bow_image = scale_img(pygame.image.load("assets/images/weapons/bow.png"),const.WEAPON_SCALE).convert_alpha()
+arrow_image = scale_img(pygame.image.load("assets/images/weapons/arrow.png"),const.WEAPON_SCALE).convert_alpha()
+
+# Function for displaying game info:
+def draw_ui():
+    pygame.draw.rect(screen, const.PANEL, (0, 0, const.SCREEN_WIDTH, 50))
+    pygame.draw.line(screen, const.WHITE, (0,50), (const.SCREEN_WIDTH, 50))
+    # draw lives
+    half_heart_drawn = False
+    for i in range(5):
+        if player.health >= ((i + 1) * 20):
+            screen.blit(heart_full, (10 + i * 50, 0))
+        elif (player.health % 20) > 0 and half_heart_drawn == False:
+            screen.blit(heart_half, (10 + i * 50, 0))
+            half_heart_drawn = True
+        else:
+            screen.blit(heart_empty, (10 + i * 50, 0))
 
 # Define font
 font = pygame.font.Font("assets/fonts/AtariClassic.ttf", 20)
@@ -40,14 +61,14 @@ class DamageText(pygame.sprite.Sprite):
 
 
 # Create the player character
-player = Character(100, 100, 'player', character_animations)
+player = Character(100, 100, 100, 'player', character_animations)
 # Create player's weapon
 bow = Weapon(bow_image, arrow_image)
 # Create sprite groups
 damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
 # Create enemy
-enemy = Character(200,300, 'ghost', character_animations)
+enemy = Character(200, 300, 100, 'ghost', character_animations)
 # Create enemy_list
 enemy_list = []
 enemy_list.append(enemy)
@@ -106,6 +127,7 @@ while running:
     for arrow in arrow_group:
         arrow.draw(screen)
     damage_text_group.draw(screen)
+    draw_ui()
 
     # Event Handler
     for event in pygame.event.get():

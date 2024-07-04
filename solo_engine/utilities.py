@@ -23,7 +23,7 @@ def load_character_animations():
                 file_path = Path(f"{const.IMAGE_FILEPATH}{character}/{animation}")
                 for img_file in file_path.glob("*.png"):
                     img = pygame.image.load(str(img_file)).convert_alpha()
-                    img = scale_img(img, const.SCALE)
+                    img = scale_img(img, const.CHARACTER_SCALE)
                     img_list.append(img)
                 animation_dict[animation] = img_list
             except FileNotFoundError as e:

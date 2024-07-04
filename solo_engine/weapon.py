@@ -69,7 +69,7 @@ class Arrow(pygame.sprite.Sprite):
     def __init__(self, image, x, y, angle, flipped_x):
         pygame.sprite.Sprite.__init__(self)
         self.original_image = image
-        self.damage = 10
+        self.damage = 25
         self.angle = angle
         self.image = pygame.transform.rotate(self.original_image, self.angle) if flipped_x else pygame.transform.rotate(self.original_image, -self.angle)
         self.rect = self.image.get_rect(center=(x, y))

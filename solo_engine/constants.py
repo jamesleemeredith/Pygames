@@ -2,18 +2,22 @@
 FPS = 240
 
 # Screen dimensions
-SCREEN_WIDTH = 1080
-SCREEN_HEIGHT = 720
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1020
 
-# Image scaling factor
-SCALE = 0.2
+# Image scaling factors
+UI_SCALE = 3
+CHARACTER_SCALE = 0.2
+WEAPON_SCALE = 0.2
 
 # Game title
 GAME_TITLE = 'Dungeon Crawler'
 
 # Color definitions
+WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 BG = (40, 25, 25)
+PANEL = (50, 50, 50)
 
 # Player speed setting
 PLAYER_SPEED = 3.1
