@@ -28,6 +28,15 @@ class DamageText(pygame.sprite.Sprite):
         self.image = font.render(damage, True,color)
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
+        self.counter = 0
+
+    def update(self):
+        # Make damage text float up
+        self.rect.y -= 1
+        # delete the counter after a few seconds
+        self.counter += 1
+        if self.counter > 50:
+            self.kill()
 
 
 # Create the player character
@@ -42,10 +51,6 @@ enemy = Character(200,300, 'ghost', character_animations)
 # Create enemy_list
 enemy_list = []
 enemy_list.append(enemy)
-
-#temp damage
-damage_text = DamageText(300,400,'15',const.RED)
-damage_text_group.add(damage_text)
 
 # Define player movement variables
 movement_flags = {
@@ -87,7 +92,10 @@ while running:
     if arrow:
         arrow_group.add(arrow)
     for arrow in arrow_group:
-        arrow.update(enemy_list)
+        damage, damage_pos = arrow.update(enemy_list)
+        if damage:
+            damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), const.RED)
+            damage_text_group.add(damage_text)
     damage_text_group.update()
 
     # Draw game objects

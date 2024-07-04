@@ -86,6 +86,10 @@ class Arrow(pygame.sprite.Sprite):
 
 
     def update(self, enemy_list):
+        # Reset variables
+        damage = None
+        damage_pos = None
+
         # Reposition the arrow based on speed
         self.rect.x += self.dx
         self.rect.y += self.dy
@@ -97,12 +101,16 @@ class Arrow(pygame.sprite.Sprite):
         # Check collision between arrow and enemies
         for enemy in enemy_list:
             if enemy.rect.colliderect(self.rect):
-                enemy.health -= (self.damage + random.randint(-5,5)) 
+                damage = self.damage + random.randint(-5,5)
+                damage_pos = enemy.rect
+                enemy.health -= damage 
                 self.kill()
                 if enemy.health <= 0:
                     enemy.health = 0
                     enemy_list.remove(enemy)
                 break
+    
+        return damage, damage_pos
 
 
     def draw(self, surface):
