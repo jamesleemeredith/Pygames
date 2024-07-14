@@ -3,6 +3,7 @@ import constants as const
 from utilities import scale_img, load_character_animations, handle_keyboard_event
 from character import Character
 from weapon import Weapon
+from items import Item
 
 # Initialize Pygame
 pygame.init()
@@ -17,6 +18,15 @@ clock = pygame.time.Clock()
 heart_empty = scale_img(pygame.image.load("assets/images/items/heart_empty.png"),const.UI_SCALE).convert_alpha()
 heart_half = scale_img(pygame.image.load("assets/images/items/heart_half.png"),const.UI_SCALE).convert_alpha()
 heart_full = scale_img(pygame.image.load("assets/images/items/heart_full.png"),const.UI_SCALE).convert_alpha()
+
+# Load coin images
+coin_images = []
+for x in range(4):
+    img = scale_img(pygame.image.load(f"assets/images/items/coin_f{x}.png"),5).convert_alpha()
+    coin_images.append(img)
+
+# Load potion iamges
+red_potion = scale_img(pygame.image.load("assets/images/items/potion_red.png"),5).convert_alpha()
 
 
 # Load character animations
@@ -67,11 +77,17 @@ bow = Weapon(bow_image, arrow_image)
 # Create sprite groups
 damage_text_group = pygame.sprite.Group()
 arrow_group = pygame.sprite.Group()
+item_group = pygame.sprite.Group()
 # Create enemy
 enemy = Character(200, 300, 100, 'ghost', character_animations)
 # Create enemy_list
 enemy_list = []
 enemy_list.append(enemy)
+# Create item
+potion = Item(200, 200, 'potion', [red_potion])
+coin = Item(400, 400, 'coin', coin_images)
+item_group.add(potion)
+item_group.add(coin)
 
 # Define player movement variables
 movement_flags = {
@@ -118,6 +134,7 @@ while running:
             damage_text = DamageText(damage_pos.centerx, damage_pos.y, str(damage), const.RED)
             damage_text_group.add(damage_text)
     damage_text_group.update()
+    item_group.update()
 
     # Draw game objects
     for enemy in enemy_list:
@@ -127,6 +144,7 @@ while running:
     for arrow in arrow_group:
         arrow.draw(screen)
     damage_text_group.draw(screen)
+    item_group.draw(screen)
     draw_ui()
 
     # Event Handler

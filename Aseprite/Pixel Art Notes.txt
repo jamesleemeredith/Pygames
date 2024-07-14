@@ -1,0 +1,28 @@
+Screen Size and Aspect Ratio:
+320x180 - 8-16-bit style games
+640x360 - Hi-bit style games
+Screen aspect ratio most commonly 16:9 at 1920 by 1080p
+
+Character Canvas Size:
+16x16 - characters similar to 8-Bit era games
+32x32 - SNES-like characters aka 16-bit
+64+   - High detail characters (requires significant time commitment)
+
+Tile Canvas Size:
+typically .5-1x the size of a character. Larger tyles make the game look more "blocky", whereas smaller tiles allow for more intricate level design
+
+
+Scale:
+Player character typically 10%-20% of total screen size
+Consider the style of game and the demands of view distance that might result (ex. a platforming intense game will want smaller characters and tiles to maximize the amount of things that can be shown on the screen in order to allow for greater map complexity)
+
+
+Detail:
+Don't think every inch of the screen needs to be filled with detail, think WHERE the detail needs to be
+
+Palettes:
+
+Outlines:
+- Outline
+- Colored Outline
+- No-Outline
