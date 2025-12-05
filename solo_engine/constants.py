@@ -2,8 +2,8 @@
 FPS = 240
 
 # Screen dimensions
-SCREEN_WIDTH = 320
-SCREEN_HEIGHT = 180
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 
 # Image scaling factors
 UI_SCALE = 3
